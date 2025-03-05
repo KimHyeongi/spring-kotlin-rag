@@ -1,0 +1,64 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/default_layout}"
+      lang="ko"
+>
+<section class="container page-container my-5 text-center main-content" layout:fragment="content">
+    <form th:action="@{/examples/profanity}" th:object="${profanity}" method="post" role="form" id="contentsForm">
+        <div class="card shadow-lg border-0 p-5 mx-auto" style="max-width: 90%; width: 90%; border-radius: 15px;">
+            <h2 class="text-center fw-bold text-primary">비속어를 찾아줍니다!</h2>
+            <p class="text-center text-muted"></p>
+            <div class="mb-5">
+                <label for="contents" class="form-label">글을 보내 주세요.</label>
+                <textarea class="form-control" id="contents" name="contents" rows="6" cols="15" placeholder="" th:field="*{contents}"></textarea>
+            </div>
+
+            <div class="mb-5">
+                <label class="form-label">엘리사의 답변:</label>
+                <div class="d-flex align-items-start p-3">
+                    <!-- 엘리사 이미지 (항상 상단 고정) -->
+                    <img src="/imgs/elisa.jpg" alt="엘리사" class="rounded-circle me-3" style="width: 50px; height: 50px; align-self: flex-start;">
+
+                    <!-- 말풍선 스타일의 답변 -->
+                    <div class="p-3 bg-light rounded" style="max-width: 100%; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                        <p class="mb-0" th:if="${profanities.size() == 0}">글을 보여 주세요.</p>
+                        <th:block th:each="item, stat: ${profanities}">
+                            <div class="p-3 rounded" style="text-align: left">
+                                <strong>비속어:</strong> <span class="text-primary" th:text="${item.profanityWord}"></span>
+                            </div>
+                            <div class="p-3 rounded" style="text-align: left">
+                                <strong>점수:</strong> <span class="text-danger" th:text="${item.profanityWordScore}"></span>
+                            </div>
+                            <div class="p-3 rounded" style="text-align: left">
+                                <strong>이유:</strong> <span class="text-muted" th:text="${item.profanityWordReasons}"></span>
+                            </div>
+                            <hr/>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 가입 버튼 -->
+            <button class="btn btn-primary btn-confirm-submit w-100 py-2 fw-bold" style="border-radius: 30px;" th:if="${profanities.size() == 0}">
+                확인하기
+            </button>
+            <button class="btn btn-primary btn-reset-submit w-100 py-2 fw-bold" style="border-radius: 30px;" th:if="${profanities.size() > 0}">
+                다시입력
+            </button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.btn-confirm-submit').on("click", function (e) {
+                e.preventDefault();
+                let $form = $('#contentsForm')
+                $form.submit()
+            });
+            $('.btn-reset-submit').on("click", function (e) {
+                e.preventDefault();
+                location.href = "/examples/profanity"
+            });
+        });
+    </script>
+</section>
+</html>

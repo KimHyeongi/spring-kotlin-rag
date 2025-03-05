@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="header">
+        <nav class="custom-navbar navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">MyApp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/recommend-plans/embedding">임베딩</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/recommend-plans/user-survey">요금제 신규 추천</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/examples/summary">긴 글 요약/주요 태그</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/examples/profanity">비속어/강도</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/examples/counselor">상담</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>

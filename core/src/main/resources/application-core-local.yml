@@ -1,0 +1,77 @@
+#file: noinspection SpringBootApplicationYaml
+spring:
+    main-writer-datasource:
+        hikari:
+            ddl-auto: update
+            driver-class-name: org.postgresql.Driver
+            jdbc-url: jdbc:postgresql://localhost:5432/myapp?targetServerType=primary
+            read-only: false
+            username: admin
+            password: 1234
+    main-reader-datasource:
+        hikari:
+            driver-class-name: org.postgresql.Driver
+            jdbc-url: jdbc:postgresql://localhost:5432/myapp?targetServerType=preferSecondary&loadBalanceHosts=true
+            read-only: true
+            username: admin
+            password: 1234
+    jpa:
+        hibernate:
+            default_schema: myapp_rag
+#            ddl-auto: none
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        properties:
+            hibernate:
+                format_sql: true
+                show_sql: true
+                main_schema: myapp_rag
+        open-in-view: false
+        defer-datasource-initialization: false
+        database: postgresql
+    sql:
+        init:
+            mode: never
+    data:
+        redis:
+            host: 127.0.0.1
+            port: 6379
+            lettuce:
+                pool:
+                    max-active: 15
+                    max-idle: 8
+                    min-idle: 3
+                    max-wait: -1
+                shutdown-timeout: 2000
+            timeout: 3000
+    cache:
+        type: redis
+    servlet:
+        multipart:
+            max-file-size: 30MB
+            max-request-size: 30MB
+    cloud:
+      aws:
+        region:
+          static: ap-northeast-2
+logging:
+    level:
+        org.hibernate.sql: debug
+        org.hibernate.orm.jdbc.bind: trace
+    config: classpath:logback-spring.xml
+langchain4j:
+    open-ai:
+        embedding-model:
+            api-key: ""
+            model-name: "text-embedding-3-small"
+        chat-model:
+            api-key: ""
+            model-name: "gpt-4o-2024-11-20"
+            log-requests: true
+            log-responses: true
+            max-retries: 1
+            store: false
+app:
+    slack:
+        channel:
+        token:

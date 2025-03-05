@@ -1,0 +1,146 @@
+server:
+    port: 8401
+    servlet:
+        session:
+            timeout: 20m
+spring:
+    application:
+        name: client-web
+    profiles:
+        group:
+            "local": "core-local"
+            "develop": "core-develop"
+            "staging": "core-staging"
+            "production": "core-production"
+    mvc:
+        pathmatch:
+            matching-strategy: ant_path_matcher
+    thymeleaf:
+        cache: false
+        check-template-location: true
+        prefix: file:client-web/src/main/resources/templates/
+        suffix: .html
+        enabled: true
+    main:
+        allow-bean-definition-overriding: true
+    messages:
+        basename: i18n/message
+        fallback-to-system-locale: true
+        encoding: UTF-8
+    cloud:
+        compatibility-verifier:
+            enabled: false
+    servlet:
+        multipart:
+            max-file-size: 10MB
+            max-request-size: 20MB
+logging:
+    config: classpath:logback-spring.xml
+---
+server:
+    port: 8888
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 20m
+spring:
+    config:
+        activate:
+            on-profile: local
+    cloud:
+        openfeign:
+            client:
+                config:
+                    default:
+                        connect-timeout: 1000
+                        read-timeout: 3000
+                    google:
+                        url: "https://"
+                        connect-timeout: 3000
+---
+server:
+    port: 8401
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 20m
+spring:
+    config:
+        activate:
+            on-profile: develop
+    thymeleaf:
+        cache: true
+        check-template-location: true
+        prefix: classpath:/templates/
+    cloud:
+        openfeign:
+            client:
+                config:
+                    default:
+                        connect-timeout: 1000
+                        read-timeout: 3000
+                    google:
+                        url: "https://"
+                        connect-timeout: 3000
+---
+server:
+    port: 8401
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 20m
+spring:
+    config:
+        activate:
+            on-profile: staging
+    thymeleaf:
+        cache: true
+        check-template-location: true
+        prefix: classpath:/templates/
+    cloud:
+        openfeign:
+            client:
+                config:
+                    default:
+                        connect-timeout: 1000
+                        read-timeout: 3000
+                    google:
+                        url: "https://"
+                        connect-timeout: 3000
+---
+server:
+    port: 8401
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 20m
+spring:
+    config:
+        activate:
+            on-profile: production
+    thymeleaf:
+        cache: true
+        check-template-location: true
+        prefix: classpath:/templates/
+    cloud:
+        openfeign:
+            client:
+                config:
+                    default:
+                        connect-timeout: 1000
+                        read-timeout: 3000
+                    google:
+                        url: "https://"
+                        connect-timeout: 3000

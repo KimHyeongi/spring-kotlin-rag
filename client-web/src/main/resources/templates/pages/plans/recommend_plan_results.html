@@ -1,0 +1,52 @@
+<html
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/default_layout}"
+    xmlns:th="http://www.thymeleaf.org"
+    lang="ko"
+>
+<section class="container page-container my-5 text-center main-content" layout:fragment="content">
+    <h2 class="fw-bold text-primary mb-4">📢 추천 요금제</h2>
+    <p class="text-muted">당신의 사용 패턴에 최적화된 요금제를 추천합니다.</p>
+
+    <th:block  th:each="reason, iStat : ${reasons}">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-lg border-3 border-primary p-3 h-100 position-relative">
+                    <span
+                        class="badge bg-primary position-absolute top-0 start-50 translate-middle px-3 py-2"
+                        th:if="${reason.type == 'best'}"
+                    >
+                        ✨ 최고 요금제 추천!
+                    </span>
+                    <span
+                        class="badge bg-success position-absolute top-0 start-50 translate-middle px-3 py-2"
+                        th:if="${reason.type == 'high'}"
+                    >
+                        넉넉하게 사용하는 요금제!
+                    </span>
+                    <span
+                        class="badge bg-danger position-absolute top-0 start-50 translate-middle px-3 py-2"
+                        th:if="${reason.type == 'low'}"
+                    >
+                        조금 절약하면 이 요금제!!
+                    </span>
+                    <div class="card-body">
+                        <h4 class="fw-bold text-primary" th:text="${'🔥'+reason.getRecommendPlan()}"></h4>
+                        <p class="text-muted" th:text="${reason.getRecommendPlanInfo()}"></p>
+                        <h5 class="text-success fw-bold">추천사유</h5>
+                        <p class="text-muted" th:text="${reason.getMonthlyUsage().getDescription()}"></p>
+                        <p class="text-muted" th:text="${reason.getRecommendReasons()}"></p>
+                        <button class="btn btn-primary w-100 mt-3">가입하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+    </th:block>
+    <!-- 추가 안내 -->
+    <div class="col-md-10">
+        <p class="text-muted">추천 요금제는 사용자의 데이터 소비 패턴을 기반으로 선정되었습니다.</p>
+        <p class="fw-bold text-dark">더 많은 옵션을 보고 싶다면 <a href="#" class="text-primary">전체 요금제 보기</a></p>
+    </div>
+</section>
+</html>

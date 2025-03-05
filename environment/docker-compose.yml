@@ -1,0 +1,99 @@
+services:
+    main-writer-postgres:
+        image: bitnami/postgresql:17.4.0
+        container_name: myapp-writer-postgres
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRESQL_POSTGRES_PASSWORD: eclipse4j.tistory.com
+            POSTGRESQL_DATABASE: myapp
+            POSTGRESQL_USERNAME: admin
+            POSTGRESQL_PASSWORD: 1234
+            POSTGRESQL_PGAUDIT_LOG: ALL
+            POSTGRESQL_REPLICATION_MODE: master
+            POSTGRESQL_REPLICATION_USER: admin_ro
+            POSTGRESQL_REPLICATION_PASSWORD: 5678
+            POSTGRESQL_MAX_CONNECTIONS: 3000
+
+    main-reader-postgres:
+        image: bitnami/postgresql:17.4.0
+        depends_on:
+            - main-writer-postgres
+        container_name: myapp-reader-postgres
+        restart: always
+        ports:
+            - "5434:5432"
+        environment:
+            POSTGRESQL_POSTGRES_PASSWORD: eclipse4j.tistory.com
+            POSTGRESQL_PASSWORD: 1234
+            POSTGRESQL_PGAUDIT_LOG: ALL
+            POSTGRESQL_MASTER_HOST: main-writer-postgres
+            POSTGRESQL_MASTER_PORT_NUMBER: 5432
+            POSTGRESQL_REPLICATION_MODE: slave
+            POSTGRESQL_REPLICATION_USER: admin_ro
+            POSTGRESQL_REPLICATION_PASSWORD: 5678
+            POSTGRESQL_MAX_CONNECTIONS: 3000
+
+    sub-writer-postgres:
+        image: bitnami/postgresql:17.4.0
+        container_name: myapp-sub-writer-postgres
+        restart: always
+        ports:
+            - "5433:5432"
+        environment:
+            POSTGRESQL_POSTGRES_PASSWORD: eclipse4j.tistory.com
+            POSTGRESQL_DATABASE: myapp_sub
+            POSTGRESQL_USERNAME: admin
+            POSTGRESQL_PASSWORD: 1234
+            POSTGRESQL_PGAUDIT_LOG: ALL
+            POSTGRESQL_REPLICATION_MODE: master
+            POSTGRESQL_REPLICATION_USER: admin_ro
+            POSTGRESQL_REPLICATION_PASSWORD: 5678
+            POSTGRESQL_MAX_CONNECTIONS: 3000
+
+    sub-reader-postgres:
+        image: bitnami/postgresql:17.4.0
+        depends_on:
+            - sub-writer-postgres
+        container_name: myapp-sub-reader-postgres
+        restart: always
+        ports:
+            - "5435:5432"
+        environment:
+            POSTGRESQL_POSTGRES_PASSWORD: eclipse4j.tistory.com
+            POSTGRESQL_PASSWORD: 1234
+            POSTGRESQL_PGAUDIT_LOG: ALL
+            POSTGRESQL_MASTER_HOST: sub-writer-postgres
+            POSTGRESQL_MASTER_PORT_NUMBER: 5432
+            POSTGRESQL_REPLICATION_MODE: slave
+            POSTGRESQL_REPLICATION_USER: admin_ro
+            POSTGRESQL_REPLICATION_PASSWORD: 5678
+            POSTGRESQL_MAX_CONNECTIONS: 3000
+
+    redis:
+        image: redis
+        container_name: myapp-redis
+        restart: always
+        ports:
+            - "6379:6379"
+        platform: linux/arm64/v8
+
+    localstack:
+        container_name: myapp-localstack
+        image: localstack/localstack:2.2.0
+        ports:
+            - "4566-4599:4566-4599"
+        environment:
+            - DEBUG=1
+            - USE_SSL=0
+            - AWS_CBOR_DISABLE=1
+            - DOCKER_HOST=unix:///var/run/docker.sock
+            - HOSTNAME=localstack
+            - SERVICES=s3, sqs
+            - AWS_ACCESS_KEY_ID=localstack
+            - AWS_SECRET_ACCESS_KEY=localstack
+            - AWS_DEFAULT_REGION=us-east-1
+        volumes:
+            - ${TEMPDIR:-/tmp/localstack}:/tmp/localstack
+            - /var/run/docker.sock:/var/run/docker.sock

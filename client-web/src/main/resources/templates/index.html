@@ -1,0 +1,21 @@
+<html
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/default_layout}"
+    lang="ko"
+>
+    <section class="container my-5 text-center" layout:fragment="content">
+        <h2 class="mb-4 fw-bold text-primary">프로젝트 엘리사의 <span class="text-info">엘리사</span>를 만나보세요.</h2>
+        <div class="mb-4 d-flex justify-content-center">
+            <img src="/imgs/elisa.jpg" class="img-fluid rounded shadow" style="max-width: 350px;">
+        </div>
+        <div class="mb-4 fs-5 text-secondary">
+            엘리사의 다양한 기능을 경험해 보세요.
+        </div>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/recommend-plans/embedding" class="btn btn-outline-primary btn-lg rounded-pill shadow-sm">임베딩</a>
+            <a href="/recommend-plans/user-survey" class="btn btn-outline-primary btn-lg rounded-pill shadow-sm">요금제 신규 추천</a>
+            <a href="/examples/summary" class="btn btn-outline-primary btn-lg rounded-pill shadow-sm">긴 글 요약/주요 태그</a>
+            <a href="/examples/profanity" class="btn btn-outline-primary btn-lg rounded-pill shadow-sm">비속어/강도</a>
+        </div>
+    </section>
+</html>

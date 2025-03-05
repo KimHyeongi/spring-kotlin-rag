@@ -1,0 +1,11 @@
+spring:
+local:
+  timezone: "Asia/Seoul"
+aws:
+  region: us-east-1
+  s3-access-key: "localstack"
+  s3-secret-key: "localstack"
+  s3-endpoint: "http://localhost:4566"
+  sqs-access-key: "localstack"
+  sqs-secret-key: "localstack"
+  sqs-endpoint: "http://localhost:4566"

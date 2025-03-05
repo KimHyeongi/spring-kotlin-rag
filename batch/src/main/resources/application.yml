@@ -1,0 +1,81 @@
+spring:
+    application:
+        name: batch
+    batch:
+        job:
+            enabled: false
+    #      name: ${job.name:NONE}
+    #    jdbc:
+    #      initialize-schema: never
+    profiles:
+        group:
+            "local": "core-local, messages"
+            "develop": "core-develop, messages"
+            "staging": "core-staging, messages"
+            "production": "core-production, messages"
+    main:
+        allow-bean-definition-overriding: true
+    messages:
+        basename: i18n/message
+        fallback-to-system-locale: true
+        encoding: UTF-8
+logging:
+    config: classpath:logback-spring.xml
+---
+server:
+    port: 8405
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 20m
+spring:
+    config:
+        activate:
+            on-profile: local
+member-auth:
+    url: http://localhost:8401
+---
+server:
+    port: 8405
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 10m
+spring:
+    config:
+        activate:
+            on-profile: develop
+---
+server:
+    port: 8405
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 10m
+spring:
+    config:
+        activate:
+            on-profile: staging
+---
+server:
+    port: 8405
+    servlet:
+        encoding:
+            enabled: true
+            charset: UTF-8
+            force: true
+        session:
+            timeout: 10m
+spring:
+    config:
+        activate:
+            on-profile: production
