@@ -19,30 +19,34 @@
                     <img src="/imgs/elisa.jpg" alt="엘리사" class="rounded-circle me-3" style="width: 50px; height: 50px; align-self: flex-start;">
 
                     <!-- 말풍선 스타일의 답변 -->
-                    <div class="p-3 bg-light rounded" style="max-width: 100%; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
-                        <p class="mb-0" th:text="${counselor}" th:if="${not #strings.isEmpty(contents.contents)}"></p>
-                        <p class="mb-0" th:if="${#strings.isEmpty(contents.contents)}">어떤 이야기를 나눠볼까요?</p>
+                    <div class="talk-round">
+
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary btn-confirm-submit w-100 py-2 fw-bold" style="border-radius: 30px;" th:if="${#strings.isEmpty(contents.contents)}">
-                확인하기
-            </button>
-            <button class="btn btn-primary btn-reset-submit w-100 py-2 fw-bold" style="border-radius: 30px;" th:if="${not #strings.isEmpty(counselor)}">
-                다시입력
+            <button class="btn btn-primary btn-confirm-send w-100 py-2 fw-bold" style="border-radius: 30px;" th:if="${#strings.isEmpty(contents.contents)}">
+                보내기
             </button>
         </div>
     </form>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.btn-confirm-submit').on("click", function (e) {
+            $('.btn-confirm-send').on("click", function (e) {
                 e.preventDefault();
-                let $form = $('#contentsForm')
-                $form.submit()
-            });
-            $('.btn-reset-submit').on("click", function (e) {
-                e.preventDefault();
-                location.href = "/examples/counselor"
+                $.ajax({
+                    url: '/examples/counselor/counsel-channel',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        contents: $('#contents').val()
+                    }),
+                    success: function (response) {
+                        let t = '<div class="p-3 bg-light rounded" style="max-width: 100%; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">';
+                        t += '<p class="mb-0">'+response+'</p>'
+                        t += '</div><div>&nbsp;</div>'
+                        $('.talk-round').append(t);
+                    }
+                })
             });
         });
     </script>

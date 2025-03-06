@@ -16,5 +16,5 @@ interface CounselorAgentService {
         """
     )
     @UserMessage("입력한 글 : {{text}}")
-    fun find(@V("text") text: String): String
+    fun counseling(@V("text") text: String): String
 }
