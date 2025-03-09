@@ -12,7 +12,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
         "com.tistory.eclipse4j.core",
         "com.tistory.eclipse4j.client"
     ],
-    exclude = [SecurityAutoConfiguration::class, OAuth2ClientAutoConfiguration::class]
+    exclude = [
+        SecurityAutoConfiguration::class,
+        OAuth2ClientAutoConfiguration::class
+    ]
 )
 class ClientApplication
 

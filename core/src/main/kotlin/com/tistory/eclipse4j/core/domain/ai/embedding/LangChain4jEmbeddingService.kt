@@ -2,13 +2,13 @@ package com.tistory.eclipse4j.core.domain.ai.embedding
 
 import dev.langchain4j.data.embedding.Embedding
 import dev.langchain4j.data.segment.TextSegment
-import dev.langchain4j.model.openai.OpenAiEmbeddingModel
+import dev.langchain4j.model.embedding.EmbeddingModel
 import org.springframework.stereotype.Service
 
 
 @Service
 class LangChain4jEmbeddingService(
-    private val embeddingModel: OpenAiEmbeddingModel
+    private val embeddingModel: EmbeddingModel
 ) {
     fun generateEmbedding(text: String): Embedding {
         val segment = TextSegment.from(text)

@@ -13,3 +13,4 @@ class ProfanityJsonToListService {
         return mapper.readValue(json, object : TypeReference<List<ProfanityWordResponse>>() {})
     }
 }
+
