@@ -57,10 +57,13 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin_stdlib}")
         implementation("io.github.oshai:kotlin-logging:${Versions.kotlin_logging}") // microutils -> oshai
-        implementation("ch.qos.logback.access:common:${Versions.logback_common}")
+
+
         implementation("ch.qos.logback:logback-core:${Versions.logback_classic}")
         implementation("ch.qos.logback:logback-classic:${Versions.logback_classic}")
+        implementation("ch.qos.logback.access:logback-access-common:${Versions.logback_common}")
         implementation("net.logstash.logback:logstash-logback-encoder:${Versions.logstash_logback_encoder}")
+
         testImplementation("org.junit.jupiter:junit-jupiter:${Versions.junit_jupiter}")
 
         testImplementation(platform("io.kotest:kotest-bom:${Versions.kotest_version}"))

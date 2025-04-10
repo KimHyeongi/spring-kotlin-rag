@@ -12,9 +12,6 @@ spring:
             "develop": "core-develop"
             "staging": "core-staging"
             "production": "core-production"
-    mvc:
-        pathmatch:
-            matching-strategy: ant_path_matcher
     thymeleaf:
         cache: false
         check-template-location: true

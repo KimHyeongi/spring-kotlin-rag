@@ -24,13 +24,13 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.jackson}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}")
 //    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-    implementation("commons-io:commons-io:2.15.0")
+    implementation("commons-io:commons-io:${Versions.commons_io}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
 
     if (osdetector.arch.equals("aarch_64")) {
-        implementation("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
+        implementation("io.netty:netty-resolver-dns-native-macos:${Versions.netty_resolver}")
     }
     testImplementation(testFixtures(project(":core")))
 }

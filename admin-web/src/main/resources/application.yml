@@ -7,15 +7,11 @@ spring:
     application:
         name: admin-web
     session:
-        store-type: redis
         redis:
             flush-mode: on_save
     profiles:
         group:
             "local": "core-local"
-    mvc:
-        pathmatch:
-            matching-strategy: ant_path_matcher
     thymeleaf:
         cache: false
         check-template-location: true
