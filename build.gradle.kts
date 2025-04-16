@@ -84,7 +84,7 @@ subprojects {
             mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
             mavenBom("org.springframework.boot:spring-boot-dependencies:${Versions.spring_boot}")
             mavenBom("org.springframework.cloud:spring-cloud-dependencies:${Versions.spring_boot_cloud}")
-            mavenBom("org.springframework.ai:spring-ai-bom:1.0.0-SNAPSHOT")
+            mavenBom("org.springframework.ai:spring-ai-bom:${Versions.spring_ai}")
         }
 
         dependencies {
